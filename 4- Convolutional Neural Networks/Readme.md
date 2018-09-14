@@ -1,6 +1,6 @@
-﻿# Convolutional Neural Networks
+# Convolutional Neural Networks
 
-This is the forth course of the deep learning specialization at [Coursera](https://www.coursera.org/specializations/deep-learning) which is moderated by [DeepLearning.ai](http://deeplearning.ai/). The course is taught by Andrew Ng.
+This is the fourth course of the deep learning specialization at [Coursera](https://www.coursera.org/specializations/deep-learning) which is moderated by [DeepLearning.ai](http://deeplearning.ai/). The course is taught by Andrew Ng.
 
 ## Table of contents
 
@@ -60,7 +60,7 @@ This is the forth course of the deep learning specialization at [Coursera](https
 
 ## Course summary
 
-Here are the course summary as its given on the course [link](https://www.coursera.org/learn/convolutional-neural-networks):
+Here is the course summary as given on the course [link](https://www.coursera.org/learn/convolutional-neural-networks):
 
 > This course will teach you how to build convolutional neural networks and apply it to image data. Thanks to deep learning, computer vision is working far better than just two years ago, and this is enabling numerous exciting applications ranging from safe autonomous driving, to accurate face recognition, to automatic reading of radiology images. 
 >
@@ -80,12 +80,12 @@ Here are the course summary as its given on the course [link](https://www.course
 
 ### Computer vision
 
-- Computer vision is from the applications that are rapidly active thanks to deep learning.
-- One of the applications of computer vision that are using deep learning includes:
+- Computer vision is one of the applications that are rapidly active thanks to deep learning.
+- Some of the applications of computer vision that are using deep learning includes:
   - Self driving cars.
   - Face recognition.
-- Deep learning also is making new arts to be created to in computer vision as we will see.
-- Rabid changes to computer vision are making new applications that weren't possible a few years ago.
+- Deep learning is also enabling new types of art to be created.
+- Rapid changes to computer vision are making new applications that weren't possible a few years ago.
 - Computer vision deep leaning techniques are always evolving making a new architectures which can help us in other areas other than computer vision.
   - For example, Andrew Ng took some ideas of computer vision and applied it in speech recognition.
 - Examples of a computer vision problems includes:
@@ -94,9 +94,9 @@ Here are the course summary as its given on the course [link](https://www.course
     - Detect object and localize them.
   - Neural style transfer
     - Changes the style of an image using another image.
-- On of the challenges of computer vision problem that images can be so large and we want a fast and accurate algorithm to work with that.
+- One of the challenges of computer vision problem that images can be so large and we want a fast and accurate algorithm to work with that.
   - For example, a `1000x1000` image will represent 3 million feature/input to the full connected neural network. If the following hidden layer contains 1000, then we will want to learn weights of the shape `[1000, 3 million]` which is 3 billion parameter only in the first layer and thats so computationally expensive!
-- On of the solutions is to build this using **convolution layers** instead of the **fully connected layers**.
+- One of the solutions is to build this using **convolution layers** instead of the **fully connected layers**.
 
 ### Edge detection example
 
@@ -119,7 +119,7 @@ Here are the course summary as its given on the course [link](https://www.course
     -1	-1	-1
     ```
 
-- There are a lot of ways we can put number inside the horizontal of vertical edge detections. For example here are the vertical **Sobel** filter (The idea is taking care of the middle row):
+- There are a lot of ways we can put number inside the horizontal or vertical edge detections. For example here are the vertical **Sobel** filter (The idea is taking care of the middle row):
 
   ```
   1	0	-1
@@ -163,18 +163,18 @@ Here are the course summary as its given on the course [link](https://www.course
 
 - Strided convolution is another piece that are used in CNNs.
 
-- We will call stride `S`
+- We will call stride `S`.
 
 - When we are making the convolution operation we used `S` to tell us the number of pixels we will jump when we are convolving filter/kernel. The last examples we described S was 1.
 
 - Now the general rule are:
-  -  if a matrix `nxn` is convolved with `fxf` filter/kernel and padding `p` and stride `s` it give us `(n+2p-f)/s+1,(n+2p-f)/s+1` matrix. 
+  -  if a matrix `nxn` is convolved with `fxf` filter/kernel and padding `p` and stride `s` it give us `(n+2p-f)/s + 1,(n+2p-f)/s + 1` matrix. 
 
 - In case `(n+2p-f)/s + 1` is fraction we can take **floor** of this value.
 
 - In math textbooks the conv operation is filpping the filter before using it. What we were doing is called cross-correlation operation but the state of art of deep learning is using this as conv operation.
 
-- Same convolutions is a convolution with a pad so that output size is the same as the input size. Its given by the equation:
+- Same convolutions is a convolution with a padding so that output size is the same as the input size. Its given by the equation:
 
   ```
   p = (n*s - n + f - s) / 2
@@ -209,7 +209,7 @@ Here are the course summary as its given on the course [link](https://www.course
   - In the last result p=0, s=1
   - Hint number of parameters here are: `(3x3x3x10) + 10 = 280`
 - The last example forms a layer in the CNN.
-- Hint that no matter how the size of the input, the number of the parameters for the same filter will still the same. That makes it less prune to overfitting.
+- Hint: no matter the size of the input, the number of the parameters is same if filter size is same. That makes it less prone to overfitting.
 - Here are some notations we will use. If layer l is a conv layer:
 
   ```
@@ -364,7 +364,7 @@ Here are the course summary as its given on the course [link](https://www.course
 
 - **AlexNet**
 
-  - Named after Alex Krizhevsky who was the first author of this paper. The other authors includes Jeoffery Hinton.
+  - Named after Alex Krizhevsky who was the first author of this paper. The other authors includes Geoffrey Hinton.
 
   - The goal for the model was the ImageNet challenge which classifies images into 1000 classes. Here are the drawing of the model:
 
@@ -384,7 +384,7 @@ Here are the course summary as its given on the course [link](https://www.course
 
   - The original paper contains Multiple GPUs and Local Response normalization (RN).
 
-    - Multiple GPUs was used because the GPUs was so fast back then.
+    - Multiple GPUs were used because the GPUs were not so fast back then.
     - Researchers proved that Local Response normalization doesn't help much so for now don't bother yourself for understanding or implementing it. 
 
   - This paper convinced the computer vision researchers that deep learning is so important.
@@ -516,8 +516,8 @@ Here are the course summary as its given on the course [link](https://www.course
 - A 1 x 1 convolution is useful when:
 
   - We want to shrink the number of channels. We also call this feature transformation.
-    - In the second discussed example above we have shrieked the input from 32 to 5.
-  - We will later see that by shrinking it can save a lot of computations.
+    - In the second discussed example above we have shrinked the input from 32 to 5 channels.
+  - We will later see that by shrinking it we can save a lot of computations.
   - If we have specified the number of 1 x 1 Conv filters to be the same as the input number of channels then the output will contain the same number of channels. Then the 1 x 1 Conv will act like a non linearity and will learn non linearity operator. 
 
 - Replace fully connected layers with 1 x 1 convolutions as Yann LeCun believes they are the same.
@@ -540,7 +540,7 @@ Here are the course summary as its given on the course [link](https://www.course
   - If we have just focused on a 5 x 5 Conv that we have done in the last example.
   - There are 32 same filters of 5 x 5, and the input are 28 x 28 x 192.
   - Output should be 28 x 28 x 32
-  - The total number of multiples needed here are:
+  - The total number of multiplications needed here are:
     - Number of outputs * Filter size * Filter size * Input dimensions
     - Which equals: `28 * 28 * 32 * 5 * 5 * 192 = 120 Mil` 
     - 120 Mil multiply operation still a problem in the modern day computers.
@@ -572,7 +572,7 @@ Here are the course summary as its given on the course [link](https://www.course
   - ![](Images/15.png)
 - Some times a Max-Pool block is used before the inception module to reduce the dimensions of the inputs.
 - There are a 3 Sofmax branches at different positions to push the network toward its goal. and helps to ensure that the intermediate features are good enough to the network to learn and it turns out that softmax0 and sofmax1 gives regularization effect.
-- Since the development of the Inception module, the authors and the others have built another versions of this network. Like inception v2, v3, and v4. Also there are a network that has used the inception module and the ResNet together.
+- Since the development of the Inception module, the authors and the others have built another versions of this network. Like inception v2, v3, and v4. Also there is a network that has used the inception module and the ResNet together.
 - [[Szegedy et al., 2014, Going Deeper with Convolutions]](https://arxiv.org/abs/1409.4842)
 
 ### Using Open-Source Implementation
@@ -583,13 +583,13 @@ Here are the course summary as its given on the course [link](https://www.course
   - Parameter tuning.
 - A lot of deep learning researchers are opening sourcing their code into Internet on sites like [Github](Github.com).
 - If you see a research paper and you want to build over it, the first thing you should do is to look for an open source implementation for this paper.
-- Some advantage of doing this is that you might download the network implementation along with its parameters/weights. The author might used a multiple GPUs and some weeks to reach this result and its right in front of you after you download it.
+- Some advantage of doing this is that you might download the network implementation along with its parameters/weights. The author might have used multiple GPUs and spent some weeks to reach this result and its right in front of you after you download it.
 
 ### Transfer Learning
 
-- It you are using a specific NN architecture that has been trained before, you can use this pretrained parameters/weights instead of random initialization to solve your problem.
+- If you are using a specific NN architecture that has been trained before, you can use this pretrained parameters/weights instead of random initialization to solve your problem.
 - It can help you boost the performance of the NN.
-- The pretrained models might have trained of a large datasets like ImageNet, Ms COCO, or pascal and took a lot of time to learn those parameters/weights with optimized hyperparameters. This can save you a lot of time.
+- The pretrained models might have trained on a large datasets like ImageNet, Ms COCO, or pascal and took a lot of time to learn those parameters/weights with optimized hyperparameters. This can save you a lot of time.
 - Lets see an example:
   - Lets say you have a cat classification problem which contains 3 classes Tigger, Misty and neither.
   - You don't have much a lot of data to train a NN on these images.
@@ -600,13 +600,13 @@ Here are the course summary as its given on the course [link](https://www.course
 - Another example:
   - What if in the last example you have a lot of pictures for your cats.
   - One thing you can do is to freeze few layers from the beginning of the pretrained network and learn the other weights in the network.
-  - Some other idea is to through away the layers that aren't freeze and put your own layers there.
+  - Some other idea is to throw away the layers that aren't frozen and put your own layers there.
 - Another example:
   - If you have enough data, you can fine tune all the layers in your pretrained network but don't random initialize the parameters, leave the learned parameters as it is and learn from there. 
 
 ### Data Augmentation
 
-- If data is increases, your deep NN will perform better. Data augmentation is one of the techniques that deep learning uses to increase the performance of deep NN.
+- If data is increased, your deep NN will perform better. Data augmentation is one of the techniques that deep learning uses to increase the performance of deep NN.
 - The majority of computer vision applications needs more data right now.
 - Some data augmentation methods that are used for computer vision tasks includes:
   - Mirroring.
@@ -632,9 +632,9 @@ Here are the course summary as its given on the course [link](https://www.course
 - If your problem has a large amount of data, researchers are tend to use:
   - Simpler algorithms.
   - Less hand engineering.
-- If you don't have that much data people are tend to try more hand engineering for the problem "Hacks". Like choosing a more complex NN architecture.
-- Because we haven't that much data in a lot of computer vision problems, It relies a lot on hand engineering.
-- We will see in the next chapter that because the object detection has a less data, a more complex NN architectures will be presented.
+- If you don't have that much data people tend to try more hand engineering for the problem "Hacks". Like choosing a more complex NN architecture.
+- Because we haven't got that much data in a lot of computer vision problems, it relies a lot on hand engineering.
+- We will see in the next chapter that because the object detection has less data, a more complex NN architectures will be presented.
 - Tips for doing well on benchmarks/winning competitions:
   - Ensembling.
     - Train several networks independently and average their outputs. Merging down some classifiers.
@@ -657,7 +657,7 @@ Here are the course summary as its given on the course [link](https://www.course
 
 ### Object Localization
 
-- Object detection is one from the areas that deep learning is doing great in the past two years.
+- Object detection is one of the areas in which deep learning is doing great in the past two years.
 
 - What are localization and detection?
 
@@ -697,11 +697,11 @@ Here are the course summary as its given on the course [link](https://www.course
     ]
     ```
 
-  - Example (Object is presented):
+  - Example (Object is present):
 
     - ```
       Y = [
-        		1		# Object is presented
+        		1		# Object is present
         		0
         		0
         		100
@@ -765,7 +765,7 @@ Here are the course summary as its given on the course [link](https://www.course
 
 - We will use a Conv net to solve the object detection problem using a technique called the sliding windows detection algorithm.
 - For example lets say we are working on Car object detection.
-- The first thing, we will a Conv net on a cropped car objects and non car images.
+- The first thing, we will train a Conv net on cropped car images and non car images.
   - ![](Images/18.png)
 - After we finish training of this Conv net we will then use it with the sliding windows technique.
 - Sliding windows detection algorithm:
@@ -786,9 +786,9 @@ Here are the course summary as its given on the course [link](https://www.course
   - ![](Images/19.png)
   - As you can see in the above image, we turned the FC layer into a Conv layer using a convolution with the width and height of the filter is the same as the width and height of the input.
 - **Convolution implementation of sliding windows**:
-  - First lets consider that the Conv net you trained in like this (No FC all is conv layers):
+  - First lets consider that the Conv net you trained is like this (No FC all is conv layers):
     - ![](Images/20.png)
-  - Say now we have a 16 x 16 x 3 image that we need to apply the sliding windows in. By the normal implementation that have been mentioned in the section before this, we could run this Conv net four times each rectangle size will be 16 x 16.
+  - Say now we have a 16 x 16 x 3 image that we need to apply the sliding windows in. By the normal implementation that have been mentioned in the section before this, we would run this Conv net four times each rectangle size will be 16 x 16.
   - The convolution implementation will be as follows:
     - ![](Images/21.png)
   - Simply we have feed the image into the same Conv net we have trained.
@@ -800,7 +800,7 @@ Here are the course summary as its given on the course [link](https://www.course
   - [[Sermanet et al., 2014, OverFeat: Integrated recognition, localization and detection using convolutional networks]](https://arxiv.org/abs/1312.6229)
 - The weakness of the algorithm is that the position of the rectangle wont be so accurate. Maybe none of the rectangles is exactly on the object you want to recognize.
   - ![](Images/23.png)
-  - In red the rectangle we want in blue the best car rectangle.
+  - In red, the rectangle we want and in blue is the required car rectangle.
 
 ### Bounding Box Predictions
 
@@ -814,7 +814,7 @@ Here are the course summary as its given on the course [link](https://www.course
 
   1. Lets say we have an image of 100 X 100
   2. Place a  3 x 3 grid on the image. For more smother results you should use 19 x 19 for the 100 x 100
-  3. Apply the classification and localization algorithm we discussed in a previous section to each section of the grid. `bx` and `by` will represent the center point of the object in each grid and will be relative to the box so the range is between 0 and 1 while `bh` and `bw` will represent the height and width of the object which can be greater than 0.0 but still float point.
+  3. Apply the classification and localization algorithm we discussed in a previous section to each section of the grid. `bx` and `by` will represent the center point of the object in each grid and will be relative to the box so the range is between 0 and 1 while `bh` and `bw` will represent the height and width of the object which can be greater than 1.0 but still a floating point value.
   4. Do everything at once with the convolution sliding window. If Y shape is 1 x 8 as we discussed before then the output of the 100 x 100 image should be 3 x 3 x 8 which corresponds to 9 cell results.
   5. Merging the results using predicted localization mid point.
 
@@ -830,8 +830,7 @@ Here are the course summary as its given on the course [link](https://www.course
 ### Intersection Over Union
 
 - Intersection Over Union is a function used to evaluate the object detection algorithm.
-- It computes size of intersection and divide it by the union. More generally, *IoU*
-  *is a measure of the overlap between two bounding boxes*.
+- It computes size of intersection and divide it by the union. More generally, *IoU* *is a measure of the overlap between two bounding boxes*.
 - For example:
   - ![](Images/25.png)
   - The red is the labeled output and the purple is the predicted output.
@@ -848,17 +847,17 @@ Here are the course summary as its given on the course [link](https://www.course
   - ![](Images/26.png)
   - Each car has two or more detections with different probabilities. This came from some of the grids that thinks that this is the center point of the object.
 - Non-max suppression algorithm:
-  1. Lets assume that we are targeting one class as an output.
+  1. Lets assume that we are targeting one class as an output class.
   2. Y shape should be `[Pc, bx, by, bh, hw]` Where Pc is the probability if that object occurs.
   3. Discard all boxes with `Pc < 0.6`  
   4. While there are any remaining boxes:
      1. Pick the box with the largest Pc Output that as a prediction.
-     2. Discard any remaining box with `IoU < 0.5` with the box output in the previous step.
-- If there are multiple classes/object types `c` you want to detect, you should run the Non-max suppression `c` times.
+     2. Discard any remaining box with `IoU > 0.5` with that box output in the previous step i.e any box with high overlap(greater than overlap threshold of 0.5).
+- If there are multiple classes/object types `c` you want to detect, you should run the Non-max suppression `c` times, once for every output class.
 
 ### Anchor Boxes
 
-- In YOLO, a grid only detects on object. What if a grid cell wants to detect multiple object?
+- In YOLO, a grid only detects one object. What if a grid cell wants to detect multiple object?
   - ![](Images/27.png)
   - Car and person grid is same here.
   - In practice this happens rarely.
@@ -873,7 +872,7 @@ Here are the course summary as its given on the course [link](https://www.course
   - ![](Images/29.png)
   - Where the car was near the anchor 2 than anchor 1.
 - You may have two or more anchor boxes but you should know their shapes.
-  - how do you choose the anchor boxes and people used to just choose them by hand you know choose a maybe five or ten anchor ball shapes that spans a variety  of shapes that see to cover the types of objects you seem to detect as a much.
+  - how do you choose the anchor boxes and people used to just choose them by hand. Maybe five or ten anchor box shapes that spans a variety  of shapes that cover the types of objects you seem to detect frequently.
   - You may also use a k-means algorithm on your dataset to specify that.
 - Anchor boxes allows your algorithm to specialize, means in our case to easily detect wider images or taller ones.
 
@@ -893,7 +892,7 @@ Here are the course summary as its given on the course [link](https://www.course
 
   - Like we said in practice they use five or more anchor boxes hand made or generated using k-means.
 
-- Our labeled Y shape will be `[Ny, HeightOfGrid, WidthOfGrid, 16]` each row is as following:
+- Our labeled Y shape will be `[Ny, HeightOfGrid, WidthOfGrid, 16]`, where Ny is number of instances and each row (of size 16) is as follows:
 
   - `[Pc, bx, by, bh, bw, c1, c2, c3, Pc, bx, by, bh, bw, c1, c2, c3]`
 
@@ -1143,24 +1142,24 @@ Here are the course summary as its given on the course [link](https://www.course
 
 #### What is face recognition?
 
-- Face recognition system identifies a persons face. It can work on both images or videos.
-- **<u>Liveness detection</u>** within a video face recognition system prevents the network from identifying a real  picture in an image. It can be learned by supervised deep learning using a dataset for live human and in-live human and sequence learning.
+- Face recognition system identifies a person's face. It can work on both images or videos.
+- **<u>Liveness detection</u>** within a video face recognition system prevents the network from identifying a face in an image. It can be learned by supervised deep learning using a dataset for live human and in-live human and sequence learning.
 - Face verification vs. face recognition:
   - Verification:
-    - Input image, name/ID. (1 : 1)
-    - Output whether the input image is that of the claimed person.
+    - Input: image, name/ID. (1 : 1)
+    - Output: whether the input image is that of the claimed person.
     - "is this the claimed person?"
   - Recognition:
     - Has a database of K persons
     - Get an input image
     - Output ID if the image is any of the K persons (or not recognized)
     - "who is this person?"
-- We can use a face verification system to make a face recognition system. The accuracy of the verification system has to be high (around 99.9% or more) to be use accurately within a recognition system because the recognition system accuracy will be less than the verification system given a K persons. 
+- We can use a face verification system to make a face recognition system. The accuracy of the verification system has to be high (around 99.9% or more) to be use accurately within a recognition system because the recognition system accuracy will be less than the verification system given K persons. 
 
 #### One Shot Learning
 
-- One of the face recognition challenges is to solve a one shot problem.
-- One Shot Learning: A recognition system is able to recognize a person learning from one image.
+- One of the face recognition challenges is to solve one shot learning problem.
+- One Shot Learning: A recognition system is able to recognize a person, learning from one image.
 - Historically deep learning doesn't work well with a small number of data.
 - Instead to make this work, we will learn a **similarity function**:
   - d( **img1**, **img2** ) = degree of difference between images.
@@ -1175,7 +1174,7 @@ Here are the course summary as its given on the course [link](https://www.course
 - Siamese network architecture are as the following:
   - ![](Images/35.png)
   - We make 2 identical conv nets which encodes an input image into a vector. In the above image the vector shape is (128, )
-  - The loss function will be `d(x1, x2) = || f(x1) - f(x2) ||2`
+  - The loss function will be `d(x1, x2) = || f(x1) - f(x2) ||^2`
   - If `X1`, `X2` are the same person, we want d to be low. If they are different persons, we want d to be high.
   - [[Taigman et. al., 2014. DeepFace closing the gap to human level performance]](https://www.cv-foundation.org/openaccess/content_cvpr_2014/html/Taigman_DeepFace_Closing_the_2014_CVPR_paper.html)
 
@@ -1187,18 +1186,18 @@ Here are the course summary as its given on the course [link](https://www.course
 - The triplet name came from that we are comparing an anchor A with a positive P and a negative N image.
 - Formally we want:
   - Positive distance to be less than negative distance
-  - `||f(A) - f(P)||2  <= ||f(A) - f(N)||2`
+  - `||f(A) - f(P)||^2  <= ||f(A) - f(N)||^2`
   - Then
-  - `||f(A) - f(P)||2  - ||f(A) - f(N)||2 <= 0`
+  - `||f(A) - f(P)||^2  - ||f(A) - f(N)||^2 <= 0`
   - To make sure the NN won't get an output of zeros easily:
-  - `||f(A) - f(P)||2  - ||f(A) - f(N)||2 <= -alpha`
+  - `||f(A) - f(P)||^2  - ||f(A) - f(N)||^2 <= -alpha`
     - Alpha is a small number. Sometimes its called the margin.
   - Then
-  - `||f(A) - f(P)||2  - ||f(A) - f(N)||2 + alpha <= 0`
+  - `||f(A) - f(P)||^2  - ||f(A) - f(N)||^2 + alpha <= 0`
 - Final Loss function:
   - Given 3 images (A, P, N)
-  - `L(A, P, N) = max (||f(A) - f(P)||2  - ||f(A) - f(N)||2 + alpha , 0)`
-  - `J = Sum((A[i], P[i], N[i]) , i)` for all triplets of images.
+  - `L(A, P, N) = max (||f(A) - f(P)||^2  - ||f(A) - f(N)||^2 + alpha , 0)`
+  - `J = Sum(L(A[i], P[i], N[i]) , i)` for all triplets of images.
 - You need multiple images of the same person in your dataset. Then get some triplets out of your dataset. Dataset should be big enough.
 - Choosing the triplets A, P, N:
   - During training if A, P, N are chosen randomly (Subjet to A and P are the same and A and N aren't the same) then one of the problems this constrain is easily satisfied 
@@ -1283,11 +1282,11 @@ Here are the course summary as its given on the course [link](https://www.course
 - In the previous section we showed that we need a cost function for the content image and the style image to measure how similar is them to each other.
 - Say you use hidden layer `l` to compute content cost. 
   - If we choose `l` to be small (like layer 1), we will force the network to get similar output to the original content image.
-  - In practice `l` is not to shallow and not too deep but in the middle.
+  - In practice `l` is not too shallow and not too deep but in the middle.
 - Use pre-trained ConvNet. (E.g., VGG network)
 - Let `a(c)[l]` and `a(G)[l]` be the activation of layer `l` on the images.
 - If `a(c)[l]` and `a(G)[l]` are similar then they will have the same content
-  - `J(C, G) at a layer l = 1/2 || a(c)[l] - a(G)[l] ||2`
+  - `J(C, G) at a layer l = 1/2 || a(c)[l] - a(G)[l] ||^2`
 
 #### Style Cost Function
 

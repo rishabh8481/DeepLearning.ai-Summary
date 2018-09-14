@@ -302,6 +302,7 @@ Here are the course summary as its given on the course [link](https://www.course
 - In NumPy, `obj.reshape(1,4)` changes the shape of the matrix by broadcasting the values.
 - Reshape is cheap in calculations so put it everywhere you're not sure about the calculations.
 - Broadcasting works when you do a matrix operation with matrices that doesn't match for the operation, in this case NumPy automatically makes the shapes ready for the operation by broadcasting the values.
+- In general principle of broadcasting. If you have an (m,n) matrix and you add(+) or subtract(-) or multiply(*) or divide(/) with a (1,n) matrix, then this will copy it m times into an (m,n) matrix. The same with if you use those operations with a (m , 1) matrix, then this will copy it n times into (m, n) matrix. And then apply the addition, subtraction, and multiplication of division element wise.
 - Some tricks to eliminate all the strange bugs in the code:
   - If you didn't specify the shape of a vector, it will take a shape of `(m,)` and the transpose operation won't work. You have to reshape it to `(m, 1)`
   - Try to not use the rank one matrix in ANN
@@ -357,7 +358,7 @@ Here are the course summary as its given on the course [link](https://www.course
 
   ```
   X1  \  
-  X2   =>  z1 = XW1 + B1 => a1 = Sigmoid(a1) => z2 = a1W2 + B2 => a2 = Sigmoid(z2) => l(a2,Y)
+  X2   =>  z1 = XW1 + B1 => a1 = Sigmoid(z1) => z2 = a1W2 + B2 => a2 = Sigmoid(z2) => l(a2,Y)
   X3  /
   ```
 
@@ -387,7 +388,7 @@ Here are the course summary as its given on the course [link](https://www.course
     - `b1` is the matrix of the first hidden layer, it has a shape of `(noOfHiddenNeurons,1)`
     - `z1` is the result of the equation `z1 = W1*X + b`, it has a shape of `(noOfHiddenNeurons,1)`
     - `a1` is the result of the equation `a1 = sigmoid(z1)`, it has a shape of `(noOfHiddenNeurons,1)`
-    - `W2` is the matrix of the second hidden layer, it has a shape of `(1,noOfHiddenLayers)`
+    - `W2` is the matrix of the second hidden layer, it has a shape of `(1,noOfHiddenNeurons)`
     - `b2` is the matrix of the second hidden layer, it has a shape of `(1,1)`
     - `z2` is the result of the equation `z2 = W2*a1 + b`, it has a shape of `(1,1)`
     - `a2` is the result of the equation `a2 = sigmoid(z2)`, it has a shape of `(1,1)`
@@ -435,7 +436,7 @@ Here are the course summary as its given on the course [link](https://www.course
 
     Or
     `A = np.tanh(z)   # Where z is the input matrix`
-- It turns out that using the Tanh function in hidden layers is far more better. (Because of the zero mean of the function)
+- It turns out that the tanh activation usually works better than sigmoid activation function for hidden units because the mean of its output is closer to zero, and so it centers the data better for the next layer.
 - Sigmoid or Tanh function disadvantage is that if the input is too small or too high, the slope will be near zero which will cause us the gradient decent problem.
 - One of the popular activation functions that solved the slow gradient decent is the RELU function.
   `RELU = max(0,z) # so if z is negative the slope is 0 and if z is positive the slope remains linear.`
@@ -455,7 +456,7 @@ Here are the course summary as its given on the course [link](https://www.course
 - If we removed the activation function from our algorithm that can be called linear activation function.
 - Linear activation function will output linear activations
   - Whatever hidden layers you add, the activation will be always linear like logistic regression (So its useless in a lot of complex problems)
-- You might use this in one place, If the output is real numbers, you can use linear activation function in the output layer.
+- You might use linear activation function in one place - in the output layer if the output is real numbers (regression problem). But even in this case if the output value is non-negative you could use RELU instead.
 
 ### Derivatives of activation functions
 
@@ -478,20 +479,19 @@ Here are the course summary as its given on the course [link](https://www.course
 
   ```
   g(z)  = np.maximum(0,z)
-  g'(z) = { 0  if z<0
-  		  1  if z>=0  }
+  g'(z) = { 0  if z < 0
+            1  if z >= 0  }
   ```
 
 - Derivation of leaky RELU activation function:
 
   ```
   g(z)  = np.maximum(0.01 * z, z)
-  g'(z) = { 0.01  if z<0
-  				  1     if z>=0   }
+  g'(z) = { 0.01  if z < 0
+            1     if z >= 0   }
   ```
 
 ### Gradient descent for Neural Networks
-
 - In this section we will have the full back propagation of the neural network (Just the equations with no explanations).
 - Gradient descent algorithm:
   - NN parameters:
@@ -524,41 +524,37 @@ Here are the course summary as its given on the course [link](https://www.course
   A2 = Sigmoid(Z2)      # Sigmoid because the output is between 0 and 1
   ```
 
-- Back propagation (The new thing / derivations):
-
+- Backpropagation (derivations):   
   ```
   dZ2 = A2 - Y      # derivative of cost function we used * derivative of the sigmoid function
   dW2 = (dZ2 * A1.T) / m
   db2 = Sum(dZ2) / m
   dZ1 = (W2.T * dZ2) * g'1(Z1)  # element wise product (*)
-  dW2 = (dZ1 * A0.T) / m   # A0 = X
-  db2 = Sum(dZ1) / m
-  # Hint there are transposes when you are trying to multiplicate because these are matrices.
+  dW1 = (dZ1 * A0.T) / m   # A0 = X
+  db1 = Sum(dZ1) / m
+  # Hint there are transposes with multiplication because to keep dimensions correct
   ```
-
-- How we derived the 6 equations of the back propagation:
-  - ![](Images/06.png)
+- How we derived the 6 equations of the backpropagation:   
+  ![](Images/06.png)
 
 ### Random Initialization
 
 - In logistic regression it wasn't important to initialize the weights randomly, while in NN we have to initialize them randomly.
 
-- If we initialize the weights with zeros in NN it won't work lets see why.
-
-- If we initialize `W` with zero, Then `A1[:,1]` will equal to `A[:,2]`. So `Z[:,1]` will equal `Z[:,2]` (We are talking in the middle layer)
-
-- Then all the hidden units will always updates the same.
+- If we initialize all the weights with zeros in NN it won't work (initializing bias with zero is OK):
+  - all hidden units will be completely identical (symmetric) - compute exactly the same function
+  - on each gradient descent iteration all the hidden units will always update the same
 
 - To solve this we initialize the W's with a small random numbers:
 
   ```
-  W1 = np.random.randn((2,2)) * 0.01   #0.01 to make it small enough
-  b1 = np.zeros((2,1))   # its ok to have b as zero, it won't get us to the symmetry problem.
+  W1 = np.random.randn((2,2)) * 0.01    # 0.01 to make it small enough
+  b1 = np.zeros((2,1))                  # its ok to have b as zero, it won't get us to the symmetry breaking problem
   ```
 
-- We need small values because in sigmoid for example, if the number is big it will be 0 or 1 we will have flat parts. So learning will be so slow.
+- We need small values because in sigmoid (or tanh), for example, if the weight is too large you are more likely to end up even at the very start of training with very large values of Z. Which causes your tanh or your sigmoid activation function to be saturated, thus slowing down learning. If you don't have any sigmoid or tanh activation functions throughout your neural network, this is less of an issue.
 
-- 0.01 is alright for 1 hidden neurons, but if the NN is deep this number can be changed but it will always be a small number.
+- Constant 0.01 is alright for 1 hidden layer networks, but if the NN is deep this number can be changed but it will always be a small number.
 
 ## Deep Neural Networks
 
@@ -584,14 +580,14 @@ Here are the course summary as its given on the course [link](https://www.course
 
 ### Forward Propagation in a Deep Network
 
-- Forward propagation General rule for one input:
+- Forward propagation general rule for one input:
 
   ```
   z[l] = W[l]a[l-1] + b[l]
   a[l] = g[l](a[l])
   ```
 
-- Forward propagation General rule for `m` inputs:
+- Forward propagation general rule for `m` inputs:
 
   ```
   Z[l] = W[l]A[l-1] + B[l]
@@ -604,7 +600,7 @@ Here are the course summary as its given on the course [link](https://www.course
 ### Getting your matrix dimensions right
 
 - The best way to debug your matrices dimensions is by a pencil and paper.
-- Dimension of `W` is `(n[l],n[l-1])` . Can be thought by Right to left.
+- Dimension of `W` is `(n[l],n[l-1])` . Can be thought by right to left.
 - Dimension of `b` is `(n[l],1)`
 - `dw` has the same shape as `W`, while `db` is the same shape as `b`
 - Dimension of `Z[l],` `A[l]`, `dZ[l]`, and `dA[l]`  is `(n[l],m)`
@@ -612,15 +608,15 @@ Here are the course summary as its given on the course [link](https://www.course
 ### Why deep representations?
 
 - Why deep NN works well, we will discuss this question in this section.
-- Deep NN makes relations with data from simpler to complex. In each layer it tries to make a relations between the previous layer.
-- Face recognition application:
-  - Image ==> Edges ==> Face parts ==> Faces ==> desired face
-- Audio recognition application:
-  - Audio ==> Low level sound features like (sss,bb) ==> Phonemes ==> Words ==> Sentences
-- Neural Researchers thinks that deep neural networks thinks like brains (Simple ==> Complex)
+- Deep NN makes relations with data from simpler to complex. In each layer it tries to make a relation with the previous layer. E.g.:
+  - 1) Face recognition application:
+      - Image ==> Edges ==> Face parts ==> Faces ==> desired face
+  - 2) Audio recognition application:
+      - Audio ==> Low level sound features like (sss,bb) ==> Phonemes ==> Words ==> Sentences
+- Neural Researchers think that deep neural networks "think" like brains (simple ==> complex)
 - Circuit theory and deep learning:
   - ![](Images/07.png)
-- When starting on an application don't start directly by dozens of hidden layers. Try the simplest solutions (L Regression) then try the parameters then try the shallow neural network and so on.
+- When starting on an application don't start directly by dozens of hidden layers. Try the simplest solutions (e.g. Logistic Regression), then try the shallow neural network and so on.
 
 ### Building blocks of deep neural networks
 
@@ -647,7 +643,7 @@ Here are the course summary as its given on the course [link](https://www.course
   dZ[l] = dA[l] * g'[l](Z[l])
   dW[l] = (dZ[l]A[l-1].T) / m
   db[l] = sum(dZ[l])/m                # Dont forget axis=1, keepdims=True
-  dA[l-1] = w[l].T * dZ[1]            # The multiplication here are a dot product.
+  dA[l-1] = w[l].T * dZ[l]            # The multiplication here are a dot product.
   Output dA[l-1], dW[l], db[l]
   ```
 
@@ -667,25 +663,28 @@ Here are the course summary as its given on the course [link](https://www.course
   - Number of hidden units `n`.
   - Choice of activation functions.
 - You have to try values yourself of hyper parameters.
-- In the old days they thought that learning rate is a parameter while now all knows its a hyper parameter.
+- In the earlier days of DL and ML learning rate was often called a parameter, but it really is (and now everybody call it) a hyperparameter.
 - On the next course we will see how to optimize hyperparameters.
 
 ### What does this have to do with the brain
 
-- No Human today understand how a human brain neuron works.
-- No Human today know exactly how many neurons on the brain.
+- The analogy that "It is like the brain" has become really an oversimplified explanation.
+- There is a very simplistic analogy between a single logistic unit and a single neuron in the brain.
+- No human today understand how a human brain neuron works.
+- No human today know exactly how many neurons on the brain.
+- Deep learning in Andrew's opinion is very good at learning very flexible, complex functions to learn X to Y mappings, to learn input-output mappings (supervised learning).
+- The field of computer vision has taken a bit more inspiration from the human brains then other disciplines that also apply deep learning.
 - NN is a small representation of how brain work. The most near model of human brain is in the computer vision (CNN)
 
 ## Extra: Ian Goodfellow interview
 
-- Ian is one of the best researchers in Deep neural network.
-- He is mainly working with generative models GANs.
-- He need to stabilize GANs to be like deep learning.
-  - GANs stabilizing will take the market as the best generative model.
-- Ian wrote the first deep learning textbook with Yoshua Bengio and Aaron Courville.
-- He works with [OpenAI.com](OpenAI.com) 
-- He tells all of the ones who want to get into AI to get a PHD or post your code on Github and the companies will find you.
-- He thinks that we need to start with securing NN right in the start while we develop it.'
+- Ian is one of the world's most visible deep learning researchers.
+- Ian is mainly working with generative models. He is the creator of GANs.
+- We need to stabilize GANs. Stabilized GANs can become the best generative models.
+- Ian wrote the first textbook on the modern version of deep learning with Yoshua Bengio and Aaron Courville.
+- Ian worked with [OpenAI.com](OpenAI.com) and Google on ML and NN applications.
+- Ian tells all who wants to get into AI to get a Ph.D. or post your code on Github and the companies will find you.
+- Ian thinks that we need to start anticipating security problems with ML now and make sure that these algorithms are secure from the start instead of trying to patch it in retroactively years later.
 
 
 
